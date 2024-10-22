@@ -56,5 +56,4 @@ const createPhotoDescr = () => ({
   likes: createRandomId(15, 200),
   comments: Array.from({length: getRandomInteger(0, 30)}, createComments)
 });
-const photos = Array.from({length: photoCount}, createPhotoDescr);
-console.log(photos)
+createPhotoDescr();
