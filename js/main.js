@@ -23,7 +23,6 @@ const descr = [
   'Архитектурные детали красивого здания.',
   'Кадр уличного искусства в старом районе.'
 ];
-const photoCount = 25;
 const getRandomInteger = (min, max) => {
   if (min > max) {
     [min, max] = [max, min];
