@@ -47,13 +47,13 @@ const createRandomId = (min, max) => {
 };
 const createComments = () => ({
     id: createRandomId(1, 1000),
-    avatar: <code>photos/${getRandomInteger(1, 25)}.jpg</code>,
+    avatar: 'photos/${getRandomInteger(1, 25)}.jpg',
     message: comments[getRandomInteger(0, comments.length - 1)],
     name: names[getRandomInteger(0,names.length - 1)],
 });
 const createPhotoDescr = () => ({
   id: createRandomId(1, 25),
-  avatar: <code>photos/${getRandomInteger(1, 25)}.jpg</code>,
+  avatar: 'photos/${getRandomInteger(1, 25)}.jpg',
   description: descr[getRandomInteger(0, descr.length - 1)],
   likes: createRandomId(15, 200),
   comments: Array.from({ length: getRandomInteger(0, 30) }, createComments)
