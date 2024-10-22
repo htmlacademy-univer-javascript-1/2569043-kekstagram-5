@@ -28,34 +28,34 @@ const descr = [
 const photoId = 25;
 const getRandomInteger = (min, max) => {
   if (min > max) {
-    [min, max] = [max, min]
-  };
-  return Math.floor(Math.random() * (max - min +1) + min);
+    [min, max] = [max, min];
+  }
+  return Math.floor(Math.random() * (upper - min + 1) + min);
 };
 const createRandomId = (min, max) => {
   const prevValues = [];
   return function() {
     let currValue = getRandomInteger(min, max);
-    if (prevValues.length >= (max-min+1)) {
+    if (prevValues.length >= (max - min + 1)) {
       return null;
-    };
+    }
     while (prevValues.includes(currValue)) {
       currValue = getRandomInteger(min, max);
-    };
+    }
     return currValue;
   };
 };
 const createComments = () => ({
-  id: createRandomId(1,1000),
+  id: createRandomId(1, 1000),
   avatar: 'img/avatar-${getRandomInteger(1, 6)}.svg',
-  message: comments[getRandomInteger(0, comments.length-1)],
+  message: comments[getRandomInteger(0, comments.length - 1)],
   name: names[getRandomInteger(0,names.length-1)],
 });
 const createPhotoDescr = () => ({
-  id: createRandomId(1,25),
+  id: createRandomId(1, 25),
   avatar: 'photos/${getRandomInteger(1, 25)}.jpg',
-  description: descr[getRandomInteger(0, descr.length-1)],
-  likes: createRandomId(15,200),
-  comments: Array.from({length: getRandomInteger(0,30)}, createComments)
+  description: descr[getRandomInteger(0, descr.length - 1)],
+  likes: createRandomId(15, 200),
+  comments: Array.from({length: getRandomInteger(0, 30)}, createComments)
 });
 const photos = Array.from({length:photoId}, createPhotoDescr);
