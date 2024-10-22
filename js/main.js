@@ -6,7 +6,7 @@ const comments = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
- const names = [
+const names = [
   'Артём',
   'Ирина',
   'Дмитрий',
@@ -35,10 +35,10 @@ const createRandomId = (min, max) => {
   return function() {
     let currValue = getRandomInteger(min, max);
     if (prevValues.length >= (max - min + 1)) {
-        return null;
+      return null;
     }
     while (prevValues.includes(currValue)) {
-        currValue = getRandomInteger(min, max);
+      currValue = getRandomInteger(min, max);
     }
     return currValue;
   };
@@ -57,3 +57,4 @@ const createPhotoDescr = () => ({
   comments: Array.from({length: getRandomInteger(0, 30)}, createComments)
 });
 const photos = Array.from({length: photoCount}, createPhotoDescr);
+console.log(photos)
