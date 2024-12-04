@@ -1,4 +1,4 @@
-import {isKeyEsc} from './util.js'
+import {isKeyEsc} from './util.js';
 const bigPic = document.querySelector('.big-picture');
 const bigPicCancel = document.querySelector('.big-picture__cancel');
 const social = bigPic.querySelector('.social');
@@ -19,25 +19,25 @@ const createFragment = (comments) => {
     commFraments.appendChild(createComments(comment));
   });
   return commFraments;
-}
+};
 const closeBigPic = () => {
   bigPic.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   bigPicCancel.removeEventListener('click', closeBigPic);
   document.removeEventListener('keydown', escKeyDown);
   overlay.removeEventListener('click', overlayClick);
-}
+};
 const escKeyDown = (evt) => {
   if (isKeyEsc(evt)) {
     evt.preventDefault();
     closeBigPic();
-  }
-}
+  };
+};
 const overlayClick = (evt) => {
   if (!evt.target.closest('.big-picture__preview')) {
     closeBigPic;
-  }
-}
+  };
+};
 const render = (post) => {
   bigPic.querySelector('.big-picture__img img').src = post.url;
   socialComm.innerHTML = '';
@@ -45,7 +45,7 @@ const render = (post) => {
   social.querySelector('.likes-count').textContent = post.likes;
   social.querySelector('.social__caption').textContent = post.description;
   socialComm.appendChild(createFragment(post.comments));
-}
+};
 export const openPost = (post) => {
   render(post);
   bigPic.classList.remove('hidden');
@@ -55,4 +55,4 @@ export const openPost = (post) => {
   document.querySelector('.body').classList.add('modal-open');
   document.addEventListener('keydown', escKeyDown);
   overlay.addEventListener('click', overlayClick)
-}
+};
