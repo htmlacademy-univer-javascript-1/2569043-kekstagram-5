@@ -16,7 +16,7 @@ const renderPhoto = (post) => {
 export const renderPrew = function() {
   const photoFragment = document.createDocumentFragment();
   createPhotoDescr.forEach((pictureContainer) => {
-    photoFragment.appendChild(renderPhoto(pictureContainer));
+    photoFragment.appendChild(renderPhoto(picture));
   });
   pictureContainer.appendChild(photoFragment);
 };
