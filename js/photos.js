@@ -12,11 +12,11 @@ const renderPhoto = (post) => {
     openPost();
   });
   return newPhoto;
-};  
+};
 export const renderPrew = function() {
   const photoFragment = document.createDocumentFragment();
   createPhotoDescr.forEach((picture) => {
-    photoFragment.appendChild(renderPhoto(pictureContainer));
+    photoFragment.appendChild(renderPhoto(picture));
   });
   pictureContainer.appendChild(photoFragment);
 };
