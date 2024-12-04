@@ -31,12 +31,12 @@ const escKeyDown = (evt) => {
   if (isKeyEsc(evt)) {
     evt.preventDefault();
     closeBigPic();
-  };
+  }
 };
 const overlayClick = (evt) => {
   if (!evt.target.closest('.big-picture__preview')) {
-    closeBigPic;
-  };
+    closeBigPic();
+  }
 };
 const render = (post) => {
   bigPic.querySelector('.big-picture__img img').src = post.url;
@@ -54,5 +54,5 @@ export const openPost = (post) => {
   document.querySelector('.comment-loader').classList.add('hidden');
   document.querySelector('.body').classList.add('modal-open');
   document.addEventListener('keydown', escKeyDown);
-  overlay.addEventListener('click', overlayClick)
+  overlay.addEventListener('click', overlayClick);
 };
