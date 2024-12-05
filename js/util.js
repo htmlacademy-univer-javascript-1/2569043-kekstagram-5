@@ -17,3 +17,4 @@ export const createRandomId = (min, max) => {
     return currValue;
   };
 };
+export const isKeyEsc = (evt) => evt.key === 'Escape';
