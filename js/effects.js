@@ -65,16 +65,15 @@ const closeSlider = () => {
 const updateSlider = () => {
   slider.noUiSlider.updateOptions({
     range: {
-        min: chosenEff.min,
-        max: chosenEff.max
+      min: chosenEff.min,
+      max: chosenEff.max
     },
     step: chosenEff.step,
     start: chosenEff.max,
   });
   if (isDefalt()) {
     closeSlider();
-  }
-  else {
+  } else {
     openSlider();
   }
 };
@@ -83,8 +82,17 @@ const effectsChange = (evt) => {
     return;
   }
   chosenEff = EFFECTS.find((effect) => effect.name === evt.target.value);
-  image.className = `effects__preview--$(chosenEff.name)`;
+  image.className = `effects__preview--${chosenEff.name}`;
   updateSlider();
+};
+const onSliderUpdate = () => {
+  const sliderValue = slider.noUiSlider.get();
+  if (isDefalt) {
+    image.style.filter = defEffect.style;
+  } else {
+    image.style.filter = `${chosenEff.style}(${sliderValue}${chosenEff.unit})`;
+  }
+  effectLevel.value = sliderValue;
 };
 export const reset = () => {
   chosenEff = defEffect;
@@ -101,4 +109,4 @@ noUiSlider.create(slider, {
 });
 closeSlider();
 effects.addEventListener('change', effectsChange);
-slider.noUiSlider.on('update', updateSlider);
+slider.noUiSlider.on('update', onSliderUpdate);
