@@ -47,13 +47,13 @@ const uniqueTags = (tags) => {
   return lowerCaseT.lenth === new Set(lowerCaseT).size;
 };
 const validateTags = (value) => {
-    const tags = value.trim().split(' ').filter((tag) => tag.trim().length);
-    return tagsValidCount(tags) && uniqueTags(tags) && tags.every(isValidTag);
+  const tags = value.trim().split(' ').filter((tag) => tag.trim().length);
+  return tagsValidCount(tags) && uniqueTags(tags) && tags.every(isValidTag);
 };
 pristine.addValidator(tagsField, validateTags, tagError);
 const onFormSubmit = (evt) => {
-    evt.preventDefault();
-    pristine.validate();
+  evt.preventDefault();
+  pristine.validate();
 };
 file.addEventListener('change', inputChange);
 cancelBtn.addEventListener('click', cancelBtnClick);
