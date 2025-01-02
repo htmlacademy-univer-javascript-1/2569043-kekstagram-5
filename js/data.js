@@ -33,10 +33,22 @@ export const createComments = () => ({
   message: comments[getRandomInteger(0, comments.length - 1)],
   name: names[getRandomInteger(0, names.length - 1)],
 });
-export const createPhotoDescr = () => ({
-  id: createRandomId(1, 25),
-  url: `photos/${getRandomInteger(1, 25)}.jpg`,
-  description: descr[getRandomInteger(0, descr.length - 1)],
-  likes: createRandomId(15, 200),
-  comments: Array.from({length: getRandomInteger(0, 30)}, createComments)
-});
+function createPhoto () {
+  const comm = [];
+  for (let i = 0; i <= getRandomInteger(0, 30); i++) {
+    comm.push(createComments());
+  }
+  return {
+    id: createRandomId(1, 25),
+    url: `photos/${getRandomInteger(1, 25)}.jpg`,
+    description: descr[getRandomInteger(0, descr.length - 1)],
+    likes: createRandomId(15, 200),
+    comments: Array.from({length: getRandomInteger(0, 30)}, createComments)
+  };
+}
+export function createArrayOfPhotos () {
+  const photoArray = [];
+  for (let i = 0; i <= 25; i++) {
+      photoArray.push(createPhoto());
+  }
+}
