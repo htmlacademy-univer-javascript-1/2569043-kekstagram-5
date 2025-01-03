@@ -5,7 +5,7 @@ const social = bigPic.querySelector('.social');
 const commTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 const socialComm = social.querySelector('.social__comments');
 const socialCommCount = social.querySelector('.social__comments-count');
-const overlay = document.querySelector('overlay');
+const overlay = document.querySelector('.overlay');
 const createComments = (comment) => {
   const commBlock = commTemplate.cloneNode(true);
   commBlock.querySelector('.social__picture').src = comment.avatar;
