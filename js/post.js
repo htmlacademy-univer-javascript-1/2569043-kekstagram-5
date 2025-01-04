@@ -1,11 +1,16 @@
 import {isKeyEsc} from './util.js';
 const bigPic = document.querySelector('.big-picture');
-const bigPicCancel = document.querySelector('.big-picture__cancel');
-const social = bigPic.querySelector('.social');
-const commTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
-const socialComm = social.querySelector('.social__comments');
-const socialCommCount = social.querySelector('.social__comments-count');
-const overlay = document.querySelector('.overlay');
+const bigPicImg = bigPic.querySelector('.big-picture__img img');
+const bigPicLikes = bigPic.querySelector('.big-picture__social .likes-count');
+const bigPicDescr = bigPic.querySelector('.big-picture__social .social__caption');
+const bigPicCommCnt = bigPic.querySelector('.social__comment-count');
+const bigPicCancel = document.querySelector('#picture-cancel');
+const social = document.querySelector('.social__comments');
+const commTemplate = document.querySelector('#comments').content.querySelector('li');
+const step = 5;
+const commLoader = document.querySelector('.comments-loader');
+let currComm = [];
+let visualCommCnt;
 const createComments = (comment) => {
   const commBlock = commTemplate.cloneNode(true);
   commBlock.querySelector('.social__picture').src = comment.avatar;
@@ -15,17 +20,40 @@ const createComments = (comment) => {
 };
 const createFragment = (comments) => {
   const commFraments = document.createDocumentFragment();
-  comments.forEach((comment) => {
-    commFraments.appendChild(createComments(comment));
+  comments.forEach((element) => {
+    commFraments.append(createComments(element));
   });
   return commFraments;
+};
+const newComments = () => {
+  social.innerHTML = '';
+  visualCommCnt = Math.min(visualCommCnt, currComm.length);
+  const commentsSelected = currComm.slice(0, visualCommCnt);
+
+  if (currComm.length <= step || visualCommCnt >= currComm.length){
+    commLoader.classList.add('hidden');
+  } else {
+    commLoader.classList.remove('hidden');
+  }
+  bigPicCommCnt.textContent = `${visualCommCnt} из ${currComm.length} комментариев`;
+  social.append(createFragment(commentsSelected));
+};
+const loadNewComments = (evt) => {
+  evt.preventDefault();
+  visualCommCnt += step;
+  newComments();
+};
+const renderBigPic = (data) =>{
+  bigPicImg.src = data.url;
+  bigPicLikes.textContent = data.likes;
+  bigPicDescr.textContent = data.description;
+  bigPicCommCnt.textContent = data.comments.length;
 };
 const closeBigPic = () => {
   bigPic.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
-  bigPicCancel.removeEventListener('click', closeBigPic);
   document.removeEventListener('keydown', escKeyDown);
-  overlay.removeEventListener('click', overlayClick);
+  commLoader.removeEventListener('click', loadNewComments);
 };
 const escKeyDown = (evt) => {
   if (isKeyEsc(evt)) {
@@ -33,26 +61,17 @@ const escKeyDown = (evt) => {
     closeBigPic();
   }
 };
-const overlayClick = (evt) => {
-  if (!evt.target.closest('.big-picture__preview')) {
-    closeBigPic();
-  }
+const display = (data) => {
+  renderBigPic(data);
+  newComments();
 };
-const render = (post) => {
-  bigPic.querySelector('.big-picture__img img').src = post.url;
-  socialComm.innerHTML = '';
-  socialCommCount.querySelector('.comments-count').textContent = post.comments.length;
-  social.querySelector('.likes-count').textContent = post.likes;
-  social.querySelector('.social__caption').textContent = post.description;
-  socialComm.appendChild(createFragment(post.comments));
-};
-export const openPost = (post) => {
-  render(post);
+export const showBigPic = (picture) => {
   bigPic.classList.remove('hidden');
-  bigPicCancel.addEventListener('click', closeBigPic);
-  socialCommCount.classList.add('hidden');
-  document.querySelector('.comment-loader').classList.add('hidden');
-  document.querySelector('.body').classList.add('modal-open');
+  body.classList.add('modal-open');
+  currComm = picture.comments.slice();
+  visualCommCnt = step;
+  display(picture);
   document.addEventListener('keydown', escKeyDown);
-  overlay.addEventListener('click', overlayClick);
+  bigPicCancel.addEventListener('click', closeBigPicture);
+  commLoader.addEventListener('click', loadNewComments);
 };
