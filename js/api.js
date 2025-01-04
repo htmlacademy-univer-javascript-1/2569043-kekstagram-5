@@ -8,8 +8,8 @@ const METHOD = {
   POST: 'POST',
 };
 const error = {
-  GET_DATA: 'Не удалось загрузить данные.',
-  SEND_DATA: 'Не удалось отправить форму.',
+  GET_DATA: 'Не удалось получить данные',
+  SEND_DATA: 'Не удалось отправить данные.',
 };
 const load = (route, errorTxt, method = METHOD.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, { method, body })
