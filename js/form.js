@@ -1,70 +1,102 @@
 import {isKeyEsc} from './util.js';
-import {reset} from './effects-image.js';
-const maxTagsCount = 5;
-const tagsRule = /^#[a-za-яё0-9]{1,19}$/i;
-const tagError = 'Не верно введены хэштеги';
-const form = document.querySelector('.img-upload__form');
-const submitBtn = form.querySelector('.img-upload__submit');
-const tagsField = document.querySelector('.text__hashtags');
-const commField = document.querySelector('.text__description');
-const file = document.querySelector('#upload-file');
-const overlay = document.querySelector('.img-upload__overlay');
-const body = document.querySelector('.body');
-const cancelBtn = document.querySelector('#upload-cancel');
-const success = document.querySelector('#success').content.querySelector('.success');
-const successBtn = document.querySelector('#success').content.querySelector('.success__button');
-const error = document.querySelector('#error').content.querySelector('.error');
-const errorBtn = document.querySelector('#error').content.querySelector('.error__button');
-const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__error'
-});
-const openModal = () => {
-  overlay.classList.remove('hidden');
-  body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
+import './pristine.js';
+import {reset} from './effects.js';
+import {sendData} from './api.js';
+const files = ['gif', 'jpg', 'jpeg', 'png'];
+const loadForm = document.querySelector('.img-upload__form');
+const loadOverlay = document.querySelector('.img-upload__overlay');
+const loadFile = document.querySelector('#upload-file');
+const imgPrew = document.querySelector('.img-upload__preview img');
+const mainImg = document.querySelector('.img-upload__preview img');
+const effects = document.querySelectorAll('.effects__preview');
+const closeBtn = document.querySelector('#upload-cancel');
+const bigBtn = document.querySelector('.scale__control--bigger');
+const smallBtn = document.querySelector('.scale__control--smaller');
+const scaleControl = document.querySelector('.scale__control--value');
+const Zoom = {
+  STEP: 25,
+  MIN: 25,
+  MAX: 100,
 };
-const closeModal = () => {
-  form.reset();
-  reset();
+const zoomChanging = (element = 1) => {
+  let size = parseInt(scaleControl.value, 10) + (Zoom.STEP * element);
+  if(size < Zoom.MIN){
+    size = Zoom.MIN;
+    return;
+  }
+  if(size > Zoom.MAX){
+    size = Zoom.MAX;
+    return;
+  }
+  scaleControl.value = `${size}%`;
+  imgPrew.style.transform = `scale(${size / 100})`;
+};
+const smallBtnClick = () => {
+  zoomChanging(-1);
+};
+const bigBtnClick = () => {
+  zoomChanging(1);
+};
+const Buttons = () => {
+  smallBtn.addEventListener('click', smallBtnClick);
+  bigBtn.addEventListener('click', bigBtnClick);
+};
+const formSubmit = (evt) => {
+  evt.preventDefault();
+  const formData = new FormData(evt.target);
+  sendData(onSuccess, onFail, 'POST', formData);
+};
+export const openForm = () => {
+  closeBtn.addEventListener('click', onCloseFormClick);
+  document.addEventListener('keydown', onCloseFormEscDown);
+  loadFile.addEventListener('change', onFileUploadChange);
+  scaleControl.value = '100%';
+  loadForm.addEventListener('submit', formSubmit);
+};
+export const closeForm = () => {
+  loadOverlay.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  removeEvents();
+  loadForm.reset();
   pristine.reset();
-  overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
+  scaleControl.value = '100%';
+  imgPrew.style.transform = 'scale(100%)';
+  reset();
 };
-const ifInTextFieldFocused = () =>
-  document.activeElement === hashtagField || document.activeElement === commentField;
-function onDocumentKeydown(evt) {
-  if (isKeyEsc(evt) && !ifInTextFieldFocused()) {
+function closeFormBtn (evt) {
+  evt.preventDefault();
+  closeForm();
+}
+function escFormClose (evt) {
+  if(isKeyEsc(evt) &&
+  !evt.target.classList.contains('text__hashtags') &&
+  !evt.target.classList.contains('text__description') &&
+  !document.querySelector('body').querySelector('.error')) {
     evt.preventDefault();
-    const hasHiddenPopup = document.querySelector('.error');
-    if (!hasHiddenPopup) {
-      closeModal();
-    }
+    closeForm();
   }
 }
-const cancelBtnClick = () => {
-  closeModal();
+const removeEvents = () => {
+  closeBtn.removeEventListener('click', closeFormBtn);
+  document.removeEventListener('keydown', escFormClose);
+  loadForm.removeEventListener('submit', formSubmit);
+  smallBtn.removeEventListener('click', smallBtnClick);
+  bigBtn.removeEventListener('click', bigBtnClick);
 };
-const inputChange = () => {
-  openModal();
+const applyFilters = () => {
+  const file = loadFile.files[0];
+  const fileName = file.name.toLowerCase();
+  if(files.some((it) => fileName.endsWith(it))){
+    mainImg.src = URL.createObjectURL(file);
+    effects.forEach((effect) => {
+      effect.style.backgroundImage = `url('${mainImg.src}')`;
+    });
+  }
 };
-const isValidTag = (tag) => tagsRule.test(tag);
-const tagsValidCount = (tags) => tags.lenth <= maxTagsCount;
-const uniqueTags = (tags) => {
-  const lowerCaseT = tags.map((tag) => tag.toLowerCase());
-  return lowerCaseT.lenth === new Set(lowerCaseT).size;
-};
-const validateTags = (value) => {
-  const tags = value.trim().split(' ').filter((tag) => tag.trim().length);
-  return tagsValidCount(tags) && uniqueTags(tags) && tags.every(isValidTag);
-};
-pristine.addValidator(tagsField, validateTags, tagError);
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-};
-file.addEventListener('change', inputChange);
-cancelBtn.addEventListener('click', cancelBtnClick);
-form.addEventListener('submit', onFormSubmit);
+function loadFormChange () {
+  document.querySelector('body').classList.add('modal-open');
+  loadOverlay.classList.remove('hidden');
+  openForm();
+  applyFilters();
+  initButtons();
+}
