@@ -2,7 +2,7 @@ import {debounce, shuffle} from './util.js';
 import {createPhoto, removePhoto} from './photos.js';
 import {photos} from './main.js';
 const imgFilterElement = document.querySelector('.img-filters__form');
-const activeFilter = document.querySelector('img-filters__button--active');
+let activeFilter = document.querySelector('img-filters__button--active');
 const maxPhotoNum = 10;
 const mainFilters = {
   'filter-default': () => photos.slice(),
