@@ -49,6 +49,6 @@ function createPhoto () {
 export function createArrayOfPhotos () {
   const photoArray = [];
   for (let i = 0; i <= 25; i++) {
-      photoArray.push(createPhoto());
+    photoArray.push(createPhoto());
   }
 }
