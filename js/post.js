@@ -54,12 +54,12 @@ const closeBigPic = () => {
   document.removeEventListener('keydown', escKeyDown);
   commLoader.removeEventListener('click', loadNewComments);
 };
-const escKeyDown = (evt) => {
+function escKeyDown = (evt) {
   if (isKeyEsc(evt)) {
     evt.preventDefault();
     closeBigPic();
   }
-};
+}
 const display = (data) => {
   renderBigPic(data);
   newComments();
