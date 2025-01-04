@@ -2,7 +2,7 @@ import {isKeyEsc} from './util.js';
 import './pristine.js';
 import {reset} from './effects.js';
 import {sendData} from './api.js';
-import { formSuccess, formFail } from './form-submit.js';
+import { formSuccess, formFail } from './submit_form.js';
 const files = ['gif', 'jpg', 'jpeg', 'png'];
 const loadForm = document.querySelector('.img-upload__form');
 const loadOverlay = document.querySelector('.img-upload__overlay');
