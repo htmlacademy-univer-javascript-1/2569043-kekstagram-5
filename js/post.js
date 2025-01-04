@@ -1,4 +1,4 @@
-import {isKeyEsc} from './util.js';
+import { isKeyEsc } from './util.js';
 const bigPic = document.querySelector('.big-picture');
 const bigPicImg = bigPic.querySelector('.big-picture__img img');
 const bigPicLikes = bigPic.querySelector('.big-picture__social .likes-count');
@@ -29,8 +29,7 @@ const newComments = () => {
   social.innerHTML = '';
   visualCommCnt = Math.min(visualCommCnt, currComm.length);
   const commentsSelected = currComm.slice(0, visualCommCnt);
-
-  if (currComm.length <= step || visualCommCnt >= currComm.length){
+  if (currComm.length <= step || visualCommCnt >= currComm.length) {
     commLoader.classList.add('hidden');
   } else {
     commLoader.classList.remove('hidden');
@@ -43,7 +42,7 @@ const loadNewComments = (evt) => {
   visualCommCnt += step;
   newComments();
 };
-const renderBigPic = (data) =>{
+const renderBigPic = (data) => {
   bigPicImg.src = data.url;
   bigPicLikes.textContent = data.likes;
   bigPicDescr.textContent = data.description;
@@ -67,11 +66,11 @@ const display = (data) => {
 };
 export const showBigPic = (picture) => {
   bigPic.classList.remove('hidden');
-  body.classList.add('modal-open');
+  document.querySelector('body').classList.add('modal-open');
   currComm = picture.comments.slice();
   visualCommCnt = step;
   display(picture);
   document.addEventListener('keydown', escKeyDown);
-  bigPicCancel.addEventListener('click', closeBigPicture);
+  bigPicCancel.addEventListener('click', closeBigPic);
   commLoader.addEventListener('click', loadNewComments);
 };
