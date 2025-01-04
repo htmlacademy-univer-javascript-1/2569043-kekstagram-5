@@ -14,9 +14,9 @@ const apply = (id) =>{
   createPhoto(mainFilters[id]());
 };
 const toogleBtn = (evt) => {
-  activeButton.classList.remove('img-filters__button--active');
-  activeButton = evt.target;
-  activeButton.classList.add('img-filters__button--active');
+  activeFilter.classList.remove('img-filters__button--active');
+  activeFilter = evt.target;
+  activeFilter.classList.add('img-filters__button--active');
 };
 const filterClick = debounce((evt) => {
   evt.preventDefault();
@@ -26,5 +26,5 @@ const filterClick = debounce((evt) => {
   }
 });
 export const initFilters = () => {
-  filtersForm.addEventListener('click', filterClick);
+  imgFilterElement.addEventListener('click', filterClick);
 };
