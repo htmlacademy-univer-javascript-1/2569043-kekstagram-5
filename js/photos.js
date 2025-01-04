@@ -2,7 +2,7 @@ import {showBigPic} from './post.js';
 const photoContainer = document.querySelector('.pictures');
 const photoTemplate = document.querySelector('#picture').content.querySelector('a');
 const photoFragment = document.createDocumentFragment();
-const renderPhoto = (post) => {
+const renderPhoto = (picture) => {
   const newPhoto = photoTemplate.cloneNode(true);
   newPhoto.querySelector('img').src = picture.url;
   newPhoto.querySelector('img').alt = picture.description;
@@ -16,7 +16,7 @@ const renderPhoto = (post) => {
   newPhoto.addEventListener('click', photoClick);
   photoFragment.append(newPhoto);
 };
-export const createPhoto = function() {
+export const createPhoto = (pictures) => {
   pictures.forEach((picture) => {
     renderPhoto(picture);
   });
