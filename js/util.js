@@ -18,3 +18,12 @@ export const createRandomId = (min, max) => {
   };
 };
 export const isKeyEsc = (evt) => evt.key === 'Escape';
+export const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+export const createImage = (id, derictory, format) => derictory + id + format;
+export const shuffle = (array) => array.sort(() => Math.random() - 0.5);
