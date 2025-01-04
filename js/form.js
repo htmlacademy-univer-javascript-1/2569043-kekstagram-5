@@ -2,6 +2,7 @@ import {isKeyEsc} from './util.js';
 import './pristine.js';
 import {reset} from './effects.js';
 import {sendData} from './api.js';
+import { formSuccess, formFail } from './form-submit.js';
 const files = ['gif', 'jpg', 'jpeg', 'png'];
 const loadForm = document.querySelector('.img-upload__form');
 const loadOverlay = document.querySelector('.img-upload__overlay');
@@ -44,7 +45,7 @@ const Buttons = () => {
 const formSubmit = (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
-  sendData(onSuccess, onFail, 'POST', formData);
+  sendData(formSuccess, formFail, 'POST', formData);
 };
 export const openForm = () => {
   closeBtn.addEventListener('click', onCloseFormClick);
