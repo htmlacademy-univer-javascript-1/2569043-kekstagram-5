@@ -1,4 +1,3 @@
-
 import {debounce, shuffle} from './util.js';
 import {createPhoto, removePhoto} from './photos.js';
 import {photos} from './main.js';
