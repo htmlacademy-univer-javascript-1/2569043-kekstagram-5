@@ -48,8 +48,8 @@ const formSubmit = (evt) => {
   sendData(formSuccess, formFail, 'POST', formData);
 };
 export const openForm = () => {
-  closeBtn.addEventListener('click', onCloseFormClick);
-  document.addEventListener('keydown', onCloseFormEscDown);
+  closeBtn.addEventListener('click', closeFormBtn);
+  document.addEventListener('keydown', escFormClose);
   loadFile.addEventListener('change', onFileUploadChange);
   scaleControl.value = '100%';
   loadForm.addEventListener('submit', formSubmit);
@@ -99,5 +99,5 @@ function loadFormChange () {
   loadOverlay.classList.remove('hidden');
   openForm();
   applyFilters();
-  initButtons();
+  Buttons();
 }
