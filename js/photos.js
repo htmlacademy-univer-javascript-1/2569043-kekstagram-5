@@ -16,7 +16,7 @@ const renderPhoto = (picture) => {
   newPhoto.addEventListener('click', photoClick);
   photoFragment.append(newPhoto);
 };
-export const createPhoto = function() {
+export const createPhoto = (pictures) => {
   pictures.forEach((picture) => {
     renderPhoto(picture);
   });
