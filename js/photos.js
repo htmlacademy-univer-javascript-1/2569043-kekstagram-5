@@ -1,22 +1,27 @@
-import {createPhotoDescr} from './data.js';
-import {openPost} from './post.js';
-const pictureContainer = document.querySelector('.pictures');
-const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
+import {showBigPic} from './post.js';
+const photoContainer = document.querySelector('.pictures');
+const photoTemplate = document.querySelector('#picture').content.querySelector('a');
+const photoFragment = document.createDocumentFragment();
 const renderPhoto = (post) => {
   const newPhoto = photoTemplate.cloneNode(true);
-  newPhoto.querySelector('.picture__img').src = post.url;
-  newPhoto.querySelector('.picture__comments').textContent = post.comments.length;
-  newPhoto.querySelector('.picture__likes').textContent = post.likes;
-  newPhoto.addEventListener('click', (evt) => {
+  newPhoto.querySelector('img').src = picture.url;
+  newPhoto.querySelector('img').alt = picture.description;
+  newPhoto.querySelector('.picture__comments').textContent = picture.comments.length;
+  newPhoto.querySelector('.picture__likes').textContent = picture.likes;
+  const photoClick = (evt) => {
     evt.preventDefault();
-    openPost();
-  });
-  return newPhoto;
+    showBigPic(picture);
+  };
+  newPhoto.dataset.id = picture.id;
+  newPhoto.addEventListener('click', photoClick);
+  photoFragment.append(newPhoto);
 };
-export const renderPrew = function() {
-  const photoFragment = document.createDocumentFragment();
-  createPhotoDescr.forEach((picture) => {
-    photoFragment.appendChild(renderPhoto(picture));
+export const createPhoto = function() {
+  pictures.forEach((picture) => {
+    renderPhoto(picture);
   });
-  pictureContainer.appendChild(photoFragment);
+  photoContainer.append(photoFragment);
+};
+export const removePhoto = () => {
+  document.querySelectorAll('.picture').forEach((photo) => photo.remove());
 };
