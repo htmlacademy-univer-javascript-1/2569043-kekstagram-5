@@ -1,9 +1,10 @@
-import {createPhoto } from './photos.js';
+import {createPhoto} from './photos.js';
 import './post.js';
 import './hashtags.js';
 import './pristine.js';
 import {openForm} from './form.js';
 import {getData} from './api.js';
+import {initFilters} from './filters.js';
 let photos = [];
 const success = (data) => {
   photos = data.slice();
@@ -25,4 +26,5 @@ const fail = () =>{
 };
 getData(success, fail);
 openForm();
+initFilters();
 export {photos};
