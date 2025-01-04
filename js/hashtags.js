@@ -1,3 +1,5 @@
+
+import {pristine} from ./pristine.js'
 const maxSymbol = 20;
 const maxTags = 5;
 const loadForm = document.querySelector('.img-upload__form');
