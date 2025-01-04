@@ -3,12 +3,6 @@ const maxTags = 5;
 const loadForm = document.querySelector('.img-upload__form');
 const submitBtn = document.querySelector('#upload-submit');
 const descrInput = document.querySelector('.text__description');
-export const pristine = new Pristine(loadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'p',
-  errorTextClass: 'img-upload__error'
-}, true);
 const inputTags = document.querySelector('.text__hashtags');
 let errorMessage = '';
 const error = () => errorMessage;
