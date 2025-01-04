@@ -1,4 +1,3 @@
-
 import {pristine} from ./pristine.js'
 const maxSymbol = 20;
 const maxTags = 5;
