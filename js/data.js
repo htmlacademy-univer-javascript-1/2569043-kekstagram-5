@@ -1,7 +1,5 @@
-import {
-  getRandomInteger,
-  createRandomId
-} from './util.js';
+import {getRandomInteger, createRandomId} from './util.js';
+
 const comments = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -19,7 +17,7 @@ const names = [
   'Мария',
   'Иван'
 ];
-const descr = [
+const descriptions = [
   'Утренний кофе с видом на город.',
   'Портрет любимого питомца.',
   'Культурное событие в центре города.',
@@ -27,12 +25,14 @@ const descr = [
   'Архитектурные детали красивого здания.',
   'Кадр уличного искусства в старом районе.'
 ];
+
 export const createComments = () => ({
   id: createRandomId(1, 750),
   avatar: `img/avatar-${getRandomInteger(1, 6)}.jpg`,
   message: comments[getRandomInteger(0, comments.length - 1)],
   name: names[getRandomInteger(0, names.length - 1)],
 });
+
 function createPhoto () {
   const comm = [];
   for (let i = 0; i <= getRandomInteger(0, 30); i++) {
@@ -41,11 +41,12 @@ function createPhoto () {
   return {
     id: createRandomId(1, 25),
     url: `photos/${getRandomInteger(1, 25)}.jpg`,
-    description: descr[getRandomInteger(0, descr.length - 1)],
+    description: descriptions[getRandomInteger(0, descriptions.length - 1)],
     likes: createRandomId(15, 200),
     comments: Array.from({length: getRandomInteger(0, 30)}, createComments)
   };
 }
+
 export function createArrayOfPhotos () {
   const photoArray = [];
   for (let i = 0; i <= 25; i++) {

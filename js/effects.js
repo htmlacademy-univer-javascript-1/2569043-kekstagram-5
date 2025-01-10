@@ -48,28 +48,33 @@ const EFFECTS = [
     unit: '',
   },
 ];
-const defEffect = EFFECTS[0];
-let chosenEff = defEffect;
+
+const defaultEffect = EFFECTS[0];
+let chosenEffect = defaultEffect;
 const image = document.querySelector('.img-upload__preview img');
 const effects = document.querySelector('.effects');
 const slider = document.querySelector('.effect-level__slider');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const effectLevel = document.querySelector('.effect-level__value');
-const isDefalt = () => chosenEff === defEffect;
+
+const isDefalt = () => chosenEffect === defaultEffect;
+
 const openSlider = () => {
   sliderContainer.classList.remove('hidden');
 };
+
 const closeSlider = () => {
   sliderContainer.classList.add('hidden');
 };
+
 const updateSlider = () => {
   slider.noUiSlider.updateOptions({
     range: {
-      min: chosenEff.min,
-      max: chosenEff.max
+      min: chosenEffect.min,
+      max: chosenEffect.max
     },
-    step: chosenEff.step,
-    start: chosenEff.max,
+    step: chosenEffect.step,
+    start: chosenEffect.max,
   });
   if (isDefalt()) {
     closeSlider();
@@ -77,36 +82,41 @@ const updateSlider = () => {
     openSlider();
   }
 };
-const effectsChange = (evt) => {
+
+const changeEffects = (evt) => {
   if (!evt.target.classList.contains('effects__redio')) {
     return;
   }
-  chosenEff = EFFECTS.find((effect) => effect.name === evt.target.value);
-  image.className = `effects__preview--${chosenEff.name}`;
+  chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  image.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
 };
+
 const onSliderUpdate = () => {
   const sliderValue = slider.noUiSlider.get();
   if (isDefalt) {
-    image.style.filter = defEffect.style;
+    image.style.filter = defaultEffect.style;
   } else {
-    image.style.filter = `${chosenEff.style}(${sliderValue}${chosenEff.unit})`;
+    image.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
   }
   effectLevel.value = sliderValue;
 };
+
 export const reset = () => {
-  chosenEff = defEffect;
+  chosenEffect = defaultEffect;
   updateSlider();
 };
+
 noUiSlider.create(slider, {
   range: {
-    min: defEffect.min,
-    max: defEffect.max,
+    min: defaultEffect.min,
+    max: defaultEffect.max,
   },
-  start: defEffect.max,
-  step: defEffect.step,
+  start: defaultEffect.max,
+  step: defaultEffect.step,
   connect: 'lower',
 });
+
 closeSlider();
-effects.addEventListener('change', effectsChange);
+effects.addEventListener('change', changeEffects);
 slider.noUiSlider.on('update', onSliderUpdate);

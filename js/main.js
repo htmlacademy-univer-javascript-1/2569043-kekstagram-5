@@ -1,17 +1,20 @@
-import {createPhoto} from './photos.js';
+import {createPhoto } from './photos.js';
 import './post.js';
 import './hashtags.js';
 import './pristine.js';
 import {openForm} from './form.js';
-import {getData} from './api.js';
-import {initFilters} from './filters.js';
-let photos = [];
-const success = (data) => {
+import {postData} from './api.js';
+import {initFilters} from './filter.js';
+
+export let photos = [];
+
+const onSuccess = (data) => {
   photos = data.slice();
   createPhoto(photos);
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
-const fail = () =>{
+
+const onFail = () =>{
   const errorMesage = document.createElement('div');
   errorMesage.style.position = 'absolute';
   errorMesage.style.left = 0;
@@ -24,7 +27,7 @@ const fail = () =>{
   errorMesage.textContent = 'Ошибка при загрузке изображений';
   document.body.append(errorMesage);
 };
-getData(success, fail);
+
+postData(onSuccess, onFail);
 openForm();
 initFilters();
-export {photos};
