@@ -1,26 +1,24 @@
-const BASE_URL = 'https://29.javascript.htmlacademy.pro/kekstagram/data';
-const PATH = {
-  GET_DATA: '/data',
-  SEND_DATA: '/',
+const urls = {
+  GET: 'https://29.javascript.htmlacademy.pro/kekstagram/data',
+  POST: 'https://29.javascript.htmlacademy.pro/kekstagram',
 };
-const METHOD = {
-  GET: 'GET',
-  POST: 'POST',
-};
-const error = {
-  GET_DATA: 'Не удалось получить данные',
-  SEND_DATA: 'Не удалось отправить данные.',
-};
-const load = (route, errorTxt, method = METHOD.GET, body = null) =>
-  fetch(`${BASE_URL}${route}`, { method, body })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error();
-      }
-      return response.json();
+
+const sendData = (onSuccess, onFail, method, body) =>{
+  fetch (
+    urls[method],
+    {
+      method: method,
+      body: body,
+    },
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      onSuccess(data);
     })
-    .catch(() => {
-      throw new Error(errorTxt);
+    .catch((err) => {
+      onFail(err);
     });
-export const getData = () => load(PATH.GET_DATA, error.GET_DATA);
-export const sendData = (body) => load(PATH.SEND_DATA, error.SEND_DATA, METHOD.POST, body);
+};
+
+export const getData = (onSuccess, onFail, method = 'GET') => sendData(onSuccess, onFail, method);
+export const postData = (onSuccess, onFail, method = 'POST', body) => sendData(onSuccess, onFail, method, body);
