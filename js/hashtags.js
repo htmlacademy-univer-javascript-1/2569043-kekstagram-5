@@ -1,4 +1,4 @@
-import {pristine} from './pristine.js'
+import {pristine} from './pristine.js';
 
 const MAX_SYMBOLS = 20;
 const MAX_TAGS = 5;
