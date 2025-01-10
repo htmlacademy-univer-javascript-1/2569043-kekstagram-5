@@ -37,26 +37,26 @@ function changeZoom (element = 1) {
   }
   scaleControl.value = `${size}%`;
   imagePreview.style.transform = `scale(${size / 100})`;
-};
+}
 
 function clickSmallButton () {
   changeZoom(-1);
-};
+}
 
 function clickBigButton () {
   changeZoom(1);
-};
+}
 
 function clickButton () {
   smallButton.addEventListener('click', clickSmallButton);
   bigButton.addEventListener('click', clickBigButton);
-};
+}
 
 function submitForm (evt) {
   evt.preventDefault();
   const formData = new FormData(evt.target);
   postData(formSuccess, formFail, 'POST', formData);
-};
+}
 
 export const openForm = () => {
   closeButton.addEventListener('click', closingFormButton);
@@ -99,7 +99,7 @@ function removeEvents () {
   loadForm.removeEventListener('submit', submitForm);
   smallButton.removeEventListener('click', clickSmallButton);
   bigButton.removeEventListener('click', clickBigButton);
-};
+}
 
 function applyFilters () {
   const file = loadFile.files[0];
@@ -112,7 +112,7 @@ function applyFilters () {
       effect.style.backgroundImage = `url('${mainImage.src}')`;
     });
   }
-};
+}
 
 function loadFormChange () {
   loadOverlay.classList.remove('hidden');
