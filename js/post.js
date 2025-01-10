@@ -59,7 +59,7 @@ const renderBigPicture = (data) =>{
 
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', escKeyDown);
   commentLoader.removeEventListener('click', loadNewComments);
 };
@@ -78,7 +78,7 @@ const display = (data) => {
 
 export const showBigPicture = (picture) => {
   bigPicture.classList.remove('hidden');
-  body.classList.add('modal-open');
+  document.body.classList.add('modal-open');
 
   currentComment = picture.comments.slice();
   visualCommentsCount = STEP;
